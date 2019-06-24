@@ -66,7 +66,7 @@ class TimeSheetGenerator(object):
         for d in dates:
             if d in range(1,16):
                 self.sheet['O5'].value = 'x'
-            elif d in range(16,32):
+            if d in range(16,32):
                 self.sheet['O6'].value = 'x'
         
         #Aggregations - adding formulae
