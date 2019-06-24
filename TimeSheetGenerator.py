@@ -7,7 +7,7 @@ from openpyxl.drawing.image import Image
 FULL_WORK_HRS = 8.0
 
 class TimeSheetGenerator(object):
-    '''Need a sample file location for generating the actual timesheet document - xslx'''
+    '''Need a config_json dictionary from the calling object. All file generation specific parameters in config_json'''
     def __init__(self,config_json):
         self.config_json = config_json
         self.wb = load_workbook(filename=config_json["sample_file_location"])
@@ -66,7 +66,7 @@ class TimeSheetGenerator(object):
         for d in dates:
             if d in range(1,16):
                 self.sheet['O5'].value = 'x'
-            if d in range(16,32):
+            elif d in range(16,32):
                 self.sheet['O6'].value = 'x'
         
         #Aggregations - adding formulae
@@ -95,9 +95,9 @@ if __name__ == "__main__":
     test_config['sample_file_location'] = 'sample_pridevel.xlsx'
     test_config['file_to_generate'] = 'test.xlsx'
     test_config['start_date'] = "02-11-2019"
-    test_config['end_date'] = "02-15-2019"
+    test_config['end_date'] = "02-14-2019"
 
-    #Generate a Timesheetgenerator object
+    #Generate a Timesheetgenerator object - This is used for testing only
     TG = TimeSheetGenerator(test_config)
     TG.reset_all_cells()
     TG.save_file()
