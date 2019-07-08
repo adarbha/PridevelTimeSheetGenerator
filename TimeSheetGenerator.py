@@ -6,12 +6,16 @@ from openpyxl.drawing.image import Image
 
 FULL_WORK_HRS = 8.0
 
+
+
 class TimeSheetGenerator(object):
     '''Need a config_json dictionary from the calling object. All file generation specific parameters in config_json'''
+
+    ## Constructors
     def __init__(self,config_json):
         self.config_json = config_json
         self.wb = load_workbook(filename=config_json["sample_file_location"])
-        # Only the first sheet would be used - so hard codeing this
+        # Only the first sheet would be used - so hard coding this
         self.sheet = self.wb[self.wb.sheetnames[0]] 
         self.dates_to_cell = self.map_dates_to_cells()
         self.dates = []
@@ -47,9 +51,12 @@ class TimeSheetGenerator(object):
 
     def generate_dates(self):
         '''Generate dates based on date ranges from config_json'''
-        ##TODO Holidays
+        ## Holidays
+        date_converter = lambda x : datetime.strptime(x,"%m-%d-%Y")
+        hols = list(map(date_converter,self.config_json['no_work_dates']))
 
-        self.dates = pd.bdate_range(start=self.config_json['start_date'],end=self.config_json['end_date'],holidays=[],freq='C').tolist()
+
+        self.dates = pd.bdate_range(start=self.config_json['start_date'],end=self.config_json['end_date'],holidays=hols,freq='C').tolist()
 
 
 
