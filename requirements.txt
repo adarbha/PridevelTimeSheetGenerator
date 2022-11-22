@@ -74,7 +74,7 @@ ordereddict==1.1
 pandas==0.23.4
 patsy==0.5.1
 pendulum==1.4.4
-Pillow==5.4.1
+Pillow==9.3.0
 psutil==4.4.2
 py4j==0.10.7
 pyasn1==0.4.5
